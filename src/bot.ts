@@ -36,6 +36,15 @@ const createBot = (): void => {
 	bot.once('end', () => void reconnect());
 
 	bot.once('spawn', () => {
+		if (CONFIG.action.autoAuth?.enabled) {
+            const password = CONFIG.action.autoAuth.password;
+            await sleep(1000); // wait a bit for server readiness
+            bot.chat(`/register ${password} ${password}`);
+            await sleep(500);
+            bot.chat(`/login ${password}`);
+            await sleep(500);
+		}
+		
 		const changePos = async (): Promise<void> => {
 			const lastAction = getRandom(CONFIG.action.commands) as Mineflayer.ControlState;
 			const halfChance: boolean = Math.random() < 0.5? true : false; // 50% chance to sprint
