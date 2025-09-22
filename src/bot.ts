@@ -35,7 +35,7 @@ const createBot = (): void => {
 	});
 	bot.once('end', () => void reconnect());
 
-	bot.once('spawn', () => {
+	bot.once('spawn', async () => {
 		if (CONFIG.action.autoAuth?.enabled) {
             const password = CONFIG.action.autoAuth.password;
             await sleep(1000); // wait a bit for server readiness
